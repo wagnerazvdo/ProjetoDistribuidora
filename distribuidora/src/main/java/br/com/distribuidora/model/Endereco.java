@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package br.com.distribuidora.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +17,15 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="tb_fornecedores")
-public class Fornecedor {
-
+@Table(name="tb_enderecos")
+public class Endereco {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
-	private String cnpj;
-	private String email;
-	private String telefone;
+	private String rua;
+	private String bairro;
+	private String cidade;
+	
+
 }

@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.distribuidora.model.Fornecedor;
-import br.com.distribuidora.repository.FornecedorRepository;
+import br.com.distribuidora.model.Usuario;
+import br.com.distribuidora.repository.UsuarioRepository;
 
 /**
  * @author wagne
  *
  */
 @RestController
-@RequestMapping("/fornecedores")
-public class FornecedorController {
+@RequestMapping("/usuarios")
+public class UsuarioController {
 	
 	@Autowired
-	private FornecedorRepository repository;
+	private UsuarioRepository repository;
 	
 	@GetMapping
-	public List<Fornecedor> listar() {
+	public List<Usuario> listar() {
 		return this.repository.findAll();	
 	}
 	
 	@PutMapping("/{id}")
-	public Fornecedor editar(@PathVariable("id") Long id, @RequestBody Fornecedor fornecedor) {
-		Fornecedor fornecedorDoBancoDeDados = this.repository.findById(id).get();
-		BeanUtils.copyProperties(fornecedor, fornecedorDoBancoDeDados, "id");
-		this.repository.save(fornecedorDoBancoDeDados);
-		return fornecedorDoBancoDeDados;
+	public Usuario editar(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+		Usuario usuarioDoBancoDeDados = this.repository.findById(id).get();
+		BeanUtils.copyProperties(usuario, usuarioDoBancoDeDados, "id");
+		this.repository.save(usuarioDoBancoDeDados);
+		return usuarioDoBancoDeDados;
 	}
 	
 	@DeleteMapping("/{id}")
@@ -50,8 +50,8 @@ public class FornecedorController {
 	
 	
 	@PostMapping
-	public Fornecedor salvar(@RequestBody Fornecedor fornecedor) {
-		return this.repository.save(fornecedor);
-	}
-	
+	public Usuario salvar(@RequestBody Usuario usuario) {
+		return this.repository.save(usuario);
+	}	
+
 }
