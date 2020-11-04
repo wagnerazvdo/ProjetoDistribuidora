@@ -15,6 +15,6 @@ import br.com.distribuidora.model.Endereco;
  */
 //@Component
 @Repository
-public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
+public interface EnderecoRepository extends JpaRepository<Endereco, Integer>{
 
 }

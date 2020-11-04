@@ -15,6 +15,6 @@ import br.com.distribuidora.model.Produto;
  */
 //@Component
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Long>{
+public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 
 }

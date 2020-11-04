@@ -36,7 +36,7 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/{id}")
-	public Usuario editar(@PathVariable("id") Long id, @RequestBody Usuario usuario) {
+	public Usuario editar(@PathVariable("id") Integer id, @RequestBody Usuario usuario) {
 		Usuario usuarioDoBancoDeDados = this.repository.findById(id).get();
 		BeanUtils.copyProperties(usuario, usuarioDoBancoDeDados, "id");
 		this.repository.save(usuarioDoBancoDeDados);
@@ -44,7 +44,7 @@ public class UsuarioController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable("id") Long id) {
+	public void deletar(@PathVariable("id") Integer id) {
 		this.repository.deleteById(id);
 	}
 	

@@ -3,6 +3,8 @@
  */
 package br.com.distribuidora.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,71 +22,67 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="tb_produtos")
-public class Produto {
+@Table(name="tb_produto")
+public class Produto implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	private String nome;
-	private String codigo;
-	private String preco;
+	private int codigo;
+	private double preco;
 	
-	@JsonBackReference(value = "cliente")
+	//@JsonBackReference(value = "cliente")
+	@JsonBackReference
 	@ManyToOne
     private Cliente cliente;
 
+/*
 	@JsonBackReference(value = "fornecedor")
 	@ManyToOne
     private Fornecedor fornecedor;
-
-	public Long getId() {
+*/
+	
+	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
-
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-
-	public String getPreco() {
+	public double getPreco() {
 		return preco;
 	}
-
-	public void setPreco(String preco) {
+	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-
 	public Cliente getCliente() {
 		return cliente;
 	}
-
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
+	/*
 	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
-
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
-	
+*/
+
 	
 }

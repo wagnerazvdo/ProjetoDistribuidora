@@ -5,7 +5,6 @@ package br.com.distribuidora.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,41 +17,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.distribuidora.model.Cliente;
-import br.com.distribuidora.repository.ClienteRepository;
+import br.com.distribuidora.service.ClienteService;
 
 /**
  * @author wagne
  *
  */
+
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
-	
+
 	@Autowired
-	private ClienteRepository repository;
-	
-	@GetMapping
-	public List<Cliente> listar() {
-		return this.repository.findAll();	
-	}
-	
-	@PutMapping("/{id}")
-	public Cliente editar(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
-		Cliente clienteDoBancoDeDados = this.repository.findById(id).get();
-		BeanUtils.copyProperties(cliente, clienteDoBancoDeDados, "id");
-		this.repository.save(clienteDoBancoDeDados);
-		return clienteDoBancoDeDados;
-	}
-	
-	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable("id") Long id) {
-		this.repository.deleteById(id);
-	}
-	
+	private ClienteService clienteService;
 	
 	@PostMapping
 	public Cliente salvar(@RequestBody Cliente cliente) {
-		return this.repository.save(cliente);
+		return this.clienteService.Salvar(cliente);
+	}	
+	
+	@GetMapping
+	public List<Cliente> listar(){
+		return this.clienteService.listaClientes();
+	}
+	
+	@DeleteMapping("/{id}")
+	public String remover(@PathVariable("id") Integer id) {
+		this.clienteService.remover(this.clienteService.buscarPorId(id));
+		return "Cliente informado deletado com sucesso!";
+	}
+	
+	@PutMapping("/{id}")
+	public Cliente buscarClienteId(@PathVariable("id") Integer id, @RequestBody Cliente cliente) {
+		Cliente clienteBD = this.clienteService.buscarPorId(id);
+		BeanUtils.copyProperties(cliente, clienteBD, "id");
+		this.clienteService.Salvar(clienteBD);
+		return clienteBD;	
 	}
 	
 }

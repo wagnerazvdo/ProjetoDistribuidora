@@ -15,6 +15,6 @@ import br.com.distribuidora.model.Fornecedor;
  */
 //@Component
 @Repository
-public interface FornecedorRepository extends JpaRepository<Fornecedor, Long>{
+public interface FornecedorRepository extends JpaRepository<Fornecedor, Integer>{
 
 }

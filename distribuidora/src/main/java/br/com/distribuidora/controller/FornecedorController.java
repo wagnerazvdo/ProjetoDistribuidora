@@ -36,7 +36,7 @@ public class FornecedorController {
 	}
 	
 	@PutMapping("/{id}")
-	public Fornecedor editar(@PathVariable("id") Long id, @RequestBody Fornecedor fornecedor) {
+	public Fornecedor editar(@PathVariable("id") Integer id, @RequestBody Fornecedor fornecedor) {
 		Fornecedor fornecedorDoBancoDeDados = this.repository.findById(id).get();
 		BeanUtils.copyProperties(fornecedor, fornecedorDoBancoDeDados, "id");
 		this.repository.save(fornecedorDoBancoDeDados);
@@ -44,7 +44,7 @@ public class FornecedorController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable("id") Long id) {
+	public void deletar(@PathVariable("id") Integer id) {
 		this.repository.deleteById(id);
 	}
 	

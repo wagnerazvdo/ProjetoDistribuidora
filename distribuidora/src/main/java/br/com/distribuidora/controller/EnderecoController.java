@@ -36,7 +36,7 @@ public class EnderecoController {
 	}
 	
 	@PutMapping("/{id}")
-	public Endereco editar(@PathVariable("id") Long id, @RequestBody Endereco endereco) {
+	public Endereco editar(@PathVariable("id") Integer id, @RequestBody Endereco endereco) {
 		Endereco enderecoDoBancoDeDados = this.repository.findById(id).get();
 		BeanUtils.copyProperties(endereco, enderecoDoBancoDeDados, "id");
 		this.repository.save(enderecoDoBancoDeDados);
@@ -44,7 +44,7 @@ public class EnderecoController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable("id") Long id) {
+	public void deletar(@PathVariable("id") Integer id) {
 		this.repository.deleteById(id);
 	}
 	

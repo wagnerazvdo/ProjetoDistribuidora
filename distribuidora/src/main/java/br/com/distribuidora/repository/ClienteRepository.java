@@ -15,6 +15,6 @@ import br.com.distribuidora.model.Cliente;
  */
 //@Component
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
 }
