@@ -17,4 +17,6 @@ import br.com.distribuidora.model.Fornecedor;
 @Repository
 public interface FornecedorRepository extends JpaRepository<Fornecedor, Integer>{
 
+
+
 }

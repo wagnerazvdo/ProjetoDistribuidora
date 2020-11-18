@@ -17,5 +17,6 @@ public interface ClienteService {
 	List<Cliente> listaClientes();
 	void remover(Cliente cliente);
 	Cliente buscarPorId(int idCliente);
+	
 
 }

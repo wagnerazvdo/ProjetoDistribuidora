@@ -7,51 +7,85 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.distribuidora.model.Usuario;
 import br.com.distribuidora.repository.UsuarioRepository;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author wagne
  *
  */
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuarios/api")
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioRepository repository;
+	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping
-	public List<Usuario> listar() {
-		return this.repository.findAll();	
+	@PostMapping("/v1")
+	public Usuario salvarV1(@RequestBody Usuario usuario) {
+		this.usuarioRepository.save(usuario);
+		return usuario;
 	}
 	
-	@PutMapping("/{id}")
-	public Usuario editar(@PathVariable("id") Integer id, @RequestBody Usuario usuario) {
-		Usuario usuarioDoBancoDeDados = this.repository.findById(id).get();
+	@ApiOperation(
+			value="Cadastrar um Usuario novo", 
+			response=ResponseEntity.class, 
+			notes="Essa operação salva um novo registro com as informações do Usuario.")
+	@PostMapping("/v2")
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public ResponseEntity<Usuario> salvarV2(@RequestBody Usuario usuario){
+		return ResponseEntity.ok().body(this.usuarioRepository.save(usuario));
+	}
+	
+	@GetMapping("/v1")
+	public List<Usuario> listarV1(){
+		return this.usuarioRepository.findAll();
+	}
+	@GetMapping("/v2")
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<List<Usuario>> listarV2(){
+		return ResponseEntity.ok().body(this.usuarioRepository.findAll());
+	}
+	
+	@PutMapping("/v1/{id}")
+	public Usuario editarUsuarioV1(@PathVariable("id") Integer id,@RequestBody Usuario usuario) {
+		Usuario usuarioDoBancoDeDados =  this.usuarioRepository.findById(id).get();
 		BeanUtils.copyProperties(usuario, usuarioDoBancoDeDados, "id");
-		this.repository.save(usuarioDoBancoDeDados);
+		this.usuarioRepository.save(usuarioDoBancoDeDados);
 		return usuarioDoBancoDeDados;
 	}
-	
-	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable("id") Integer id) {
-		this.repository.deleteById(id);
+	@PatchMapping("/v2/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<Usuario> editarUsuarioV2(@PathVariable("id") Integer id, @RequestBody Usuario usuario){
+		Usuario usuarioDoBancoDeDados =  this.usuarioRepository.findById(id).get();
+		BeanUtils.copyProperties(usuario, usuarioDoBancoDeDados, "id");
+		return ResponseEntity.ok().body(this.usuarioRepository.save(usuario));
 	}
 	
+	@DeleteMapping("/v1/{id}")
+	public String deletarV1(@PathVariable("id") Integer id) {
+		this.usuarioRepository.deleteById(id);
+		return "Usuario excluído com sucesso!";
+	}
+	@DeleteMapping("/v2/{id}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public String deletarV2(@PathVariable("id") Integer id) {
+		this.usuarioRepository.deleteById(id);
+		return "Usuario deletado!";
+	}
 	
-	@PostMapping
-	public Usuario salvar(@RequestBody Usuario usuario) {
-		return this.repository.save(usuario);
-	}	
-
 }

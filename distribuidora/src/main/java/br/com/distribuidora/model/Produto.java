@@ -3,7 +3,7 @@
  */
 package br.com.distribuidora.model;
 
-import java.io.Serializable;
+import java.io.Serializable; 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +14,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
-
 /**
  * @author wagne
  *
  */
-@Data
+
 @Entity
 @Table(name="tb_produto")
 public class Produto implements Serializable{

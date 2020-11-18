@@ -11,13 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 /**
  * @author wagne
  *
  */
-@Data
 @Entity
 @Table(name="tb_fornecedor")
 public class Fornecedor implements Serializable{

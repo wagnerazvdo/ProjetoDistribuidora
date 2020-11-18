@@ -13,13 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
-
 /**
  * @author wagne
  *
  */
-@Data
+
 @Entity
 @Table(name="tb_usuarios")
 public class Usuario {
